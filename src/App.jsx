@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import config from "./config";
+import profileImage from "./pic.jpeg";
 
 function App() {
   const [activeTab, setActiveTab] = useState("about");
@@ -84,7 +85,7 @@ function App() {
             </div>
           </div>
           <div className="hero-image-container">
-            <img src={hero.image} alt={hero.name} className="hero-image" />
+            <img src={profileImage} alt={hero.name} className="hero-image" />
             <div className={`hero-status ${hero.status.available ? 'available' : 'unavailable'}`}>
               <span className="status-dot"></span>
               {hero.status.text}
@@ -99,58 +100,90 @@ function App() {
       </section>
 
       <section id="skills" className="skills">
-        <h2 className="section-heading">Skills</h2>
-        <ul className="skills-list">
-          {skills.map((skill) => (
-            <li key={skill} className="skill-badge">
-              {skill}
-            </li>
+        <h2 className="section-heading">{skills.title}</h2>
+        <p className="skills-subtitle">{skills.subtitle}</p>
+        <div className="skills-grid">
+          {skills.categories.map((category, index) => (
+            <div key={index} className="skill-category" data-testid="skill-category">
+              <div className="category-header">
+                <span className="category-icon">{category.icon}</span>
+                <h3 className="category-name">{category.name}</h3>
+              </div>
+              <div className="category-skills">
+                {category.skills.map((skill, skillIndex) => (
+                  <span key={skillIndex} className="skill-item">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       </section>
 
       <section id="experience" className="experience">
-        <h2 className="section-heading">Experience</h2>
-        {experience.map((job) => (
-          <div key={`${job.company}-${job.period}`} className="experience-item">
+        <h2 className="section-heading">Professional Experience</h2>
+        {experience.map((job, index) => (
+          <div key={index} className="experience-item" data-testid="experience-item">
             <div className="experience-header">
-              <div className="role">{job.role}</div>
-              <div className="company">{job.company}</div>
+              <div className="experience-header-left">
+                <div className="role">{job.role}</div>
+                <div className="company">{job.company}</div>
+              </div>
               <div className="experience-meta">
-                <div className="period">{job.period}</div>
-                <div className="location">{job.location}</div>
-                <div className="type">{job.type}</div>
+                <span className="period">{job.period}</span>
+                <span className="location">{job.location}</span>
+                <span className="type">{job.type}</span>
               </div>
             </div>
-            <ul className="experience-highlights">
-              {job.highlights.map((highlight, i) => (
-                <li key={i}>{highlight}</li>
+            <ul className="experience-description">
+              {job.highlights.map((highlight, descIndex) => (
+                <li key={descIndex}>{highlight}</li>
               ))}
             </ul>
+            <div className="experience-technologies">
+              {job.technologies.map((tech, techIndex) => (
+                <span key={techIndex} className="experience-tech-badge">
+                  {tech}
+                </span>
+              ))}
+            </div>
           </div>
         ))}
       </section>
 
       <section id="projects" className="projects">
-        <h2 className="section-heading">Projects</h2>
-        {projects.map((project) => (
-          <div key={project.name} className={`project-item ${project.featured ? 'featured' : ''}`}>
-            <h3>{project.name}</h3>
-            <p>{project.description}</p>
-            <div className="technologies">
-              {project.technologies.map((tech) => (
-                <span key={tech} className="tech-badge">{tech}</span>
-              ))}
+        <h2 className="section-heading">Featured Projects</h2>
+        <p className="section-description">
+          A selection of projects that demonstrate my expertise in full-stack development and modern DevOps practices.
+        </p>
+        <div className="projects-grid">
+          {projects.map((project, index) => (
+            <div key={index} className="project-card">
+              <div className="project-image-placeholder">
+                {project.name}
+              </div>
+              <h3 className="project-title">{project.name}</h3>
+              <p className="project-description">{project.description}</p>
+              <div className="project-technologies">
+                {project.technologies.map((tech, techIndex) => (
+                  <span key={techIndex} className="project-tech-badge">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <div className="project-links">
+                <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="project-link see-more">
+                  See More
+                </a>
+              </div>
             </div>
-            <a href={project.link} target="_blank" rel="noopener noreferrer">
-              View Project →
-            </a>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
 
       <section id="contact" className="contact">
-        <h2 className="section-heading">Get In Touch</h2>
+        <h2 className="section-heading contact-heading">Get In Touch</h2>
         <div className="contact-content">
           <p className="contact-intro">
             I'm always interested in hearing about new opportunities and exciting projects. 
