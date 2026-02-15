@@ -57,8 +57,13 @@ describe('App Component', () => {
     expect(statusElement).toBeInTheDocument();
     
     const statusContainer = statusElement.closest('.hero-status');
-    expect(statusContainer).toHaveClass('available');
-    expect(statusContainer).not.toHaveClass('unavailable');
+    if (config.hero.status.available) {
+      expect(statusContainer).toHaveClass('available');
+      expect(statusContainer).not.toHaveClass('unavailable');
+    } else {
+      expect(statusContainer).toHaveClass('unavailable');
+      expect(statusContainer).not.toHaveClass('available');
+    }
   });
 
   it('displays social links with correct hrefs and aria labels', () => {
@@ -81,11 +86,11 @@ describe('App Component', () => {
   it('renders all section headings', () => {
     render(<App />);
     
-    expect(screen.getByText('About')).toBeInTheDocument();
-    expect(screen.getByText('Skills')).toBeInTheDocument();
-    expect(screen.getByText('Experience')).toBeInTheDocument();
-    expect(screen.getByText('Projects')).toBeInTheDocument();
-    expect(screen.getByText('Get In Touch')).toBeInTheDocument();
+    expect(screen.getByText('About', { selector: '.section-heading' })).toBeInTheDocument();
+    expect(screen.getByText('Technical Skills', { selector: '.section-heading' })).toBeInTheDocument();
+    expect(screen.getByText('Professional Experience', { selector: '.section-heading' })).toBeInTheDocument();
+    expect(screen.getByText('Featured Projects', { selector: '.section-heading' })).toBeInTheDocument();
+    expect(screen.getByText('Get In Touch', { selector: '.section-heading' })).toBeInTheDocument();
   });
 
   it('displays about section content', () => {
@@ -93,29 +98,35 @@ describe('App Component', () => {
     
     const aboutSection = document.getElementById('about');
     expect(aboutSection).toBeInTheDocument();
-    expect(aboutSection).toHaveTextContent(config.about);
+    expect(aboutSection.textContent).toContain(config.about);
   });
 
   it('displays skills as badges', () => {
     render(<App />);
     
-    config.skills.forEach(skill => {
-      expect(screen.getByText(skill)).toBeInTheDocument();
+    config.skills.categories.forEach(category => {
+      category.skills.forEach(skill => {
+        const skillElements = screen.getAllByText(skill);
+        const skillBadge = skillElements.find(el => el.classList.contains('skill-item'));
+        expect(skillBadge).toBeInTheDocument();
+      });
     });
   });
 
   it('displays experience items with correct details', () => {
     render(<App />);
     
-    config.experience.forEach(job => {
-      expect(screen.getByText(job.role)).toBeInTheDocument();
-      expect(screen.getByText(job.company)).toBeInTheDocument();
-      expect(screen.getByText(job.period)).toBeInTheDocument();
-      expect(screen.getByText(job.location)).toBeInTheDocument();
-      expect(screen.getByText(job.type)).toBeInTheDocument();
+    config.experience.forEach((job, index) => {
+      const experienceItem = screen.getAllByTestId('experience-item')[index];
+      
+      expect(experienceItem).toHaveTextContent(job.role);
+      expect(experienceItem).toHaveTextContent(job.company);
+      expect(experienceItem).toHaveTextContent(job.period);
+      expect(experienceItem).toHaveTextContent(job.location);
+      expect(experienceItem).toHaveTextContent(job.type);
       
       job.highlights.forEach(highlight => {
-        expect(screen.getByText(highlight)).toBeInTheDocument();
+        expect(experienceItem).toHaveTextContent(highlight);
       });
     });
   });
@@ -124,14 +135,18 @@ describe('App Component', () => {
     render(<App />);
     
     config.projects.forEach(project => {
-      expect(screen.getByText(project.name)).toBeInTheDocument();
+      expect(screen.getByText(project.name, { selector: '.project-title' })).toBeInTheDocument();
       expect(screen.getByText(project.description)).toBeInTheDocument();
-      expect(screen.getByText(project.link)).toBeInTheDocument();
       
       project.technologies.forEach(tech => {
-        expect(screen.getByText(tech)).toBeInTheDocument();
+        const techElements = screen.getAllByText(tech);
+        const projectTechBadge = techElements.find(el => el.classList.contains('project-tech-badge'));
+        expect(projectTechBadge).toBeInTheDocument();
       });
     });
+    
+    const seeMoreLinks = screen.getAllByText('See More');
+    expect(seeMoreLinks.length).toBe(config.projects.length);
   });
 
   it('displays contact section with correct content', () => {
@@ -159,11 +174,11 @@ describe('App Component', () => {
   it('renders tab navigation with all tabs', () => {
     render(<App />);
     
-    expect(screen.getByText('About')).toBeInTheDocument();
-    expect(screen.getByText('Skills')).toBeInTheDocument();
-    expect(screen.getByText('Experience')).toBeInTheDocument();
-    expect(screen.getByText('Projects')).toBeInTheDocument();
-    expect(screen.getByText('Contact')).toBeInTheDocument();
+    expect(screen.getByText('About', { selector: '.tab-button' })).toBeInTheDocument();
+    expect(screen.getByText('Skills', { selector: '.tab-button' })).toBeInTheDocument();
+    expect(screen.getByText('Experience', { selector: '.tab-button' })).toBeInTheDocument();
+    expect(screen.getByText('Projects', { selector: '.tab-button' })).toBeInTheDocument();
+    expect(screen.getByText('Contact', { selector: '.tab-button' })).toBeInTheDocument();
   });
 
   it('highlights active tab correctly', () => {
@@ -217,7 +232,7 @@ describe('App Component', () => {
     
     config.projects.forEach(project => {
       if (project.featured) {
-        const projectElement = screen.getByText(project.name).closest('.project-item');
+        const projectElement = screen.getByText(project.name, { selector: '.project-title' }).closest('.project-card');
         expect(projectElement).toHaveClass('featured');
       }
     });
@@ -232,7 +247,7 @@ describe('App Component', () => {
         expect(techElements.length).toBeGreaterThan(0);
         
         // Check if at least one has the tech-badge class
-        const techBadge = techElements.find(el => el.classList.contains('tech-badge'));
+        const techBadge = techElements.find(el => el.classList.contains('project-tech-badge'));
         expect(techBadge).toBeInTheDocument();
       });
     });
@@ -294,7 +309,8 @@ describe('App Component', () => {
     render(<App />);
     
     const skillBadges = screen.getAllByTestId('skill-badge');
-    expect(skillBadges).toHaveLength(config.skills.length);
+    const totalSkills = config.skills.categories.flatMap(category => category.skills);
+    expect(skillBadges).toHaveLength(totalSkills.length);
   });
 
   it('displays correct number of experience items', () => {

@@ -94,6 +94,18 @@ function App() {
         </div>
       </section>
 
+      <section className="hero-quote">
+        <div className="section-divider">
+          <div className="divider-line"></div>
+        </div>
+        <div className="quote-container">
+          <blockquote className="hero-quote-text">
+            {import.meta.env.VITE_HERO_QUOTE || "Innovation should serve humanity,\n design with empathy for the people you're trying to design for."}
+          </blockquote>
+      
+        </div>
+      </section>
+
       <section id="about" className="about">
         <h2 className="section-heading">About</h2>
         <p>{about}</p>
@@ -111,7 +123,7 @@ function App() {
               </div>
               <div className="category-skills">
                 {category.skills.map((skill, skillIndex) => (
-                  <span key={skillIndex} className="skill-item">
+                  <span key={skillIndex} className="skill-item" data-testid="skill-badge">
                     {skill}
                   </span>
                 ))}
@@ -159,7 +171,7 @@ function App() {
         </p>
         <div className="projects-grid">
           {projects.map((project, index) => (
-            <div key={index} className="project-card">
+            <div key={index} className={`project-card ${project.featured ? 'featured' : ''}`} data-testid="project-item">
               <div className="project-image-placeholder">
                 {project.name}
               </div>
@@ -167,7 +179,7 @@ function App() {
               <p className="project-description">{project.description}</p>
               <div className="project-technologies">
                 {project.technologies.map((tech, techIndex) => (
-                  <span key={techIndex} className="project-tech-badge">
+                  <span key={techIndex} className="project-tech-badge" data-testid="tech-badge">
                     {tech}
                   </span>
                 ))}

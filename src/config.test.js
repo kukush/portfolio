@@ -23,13 +23,22 @@ describe('Configuration', () => {
     expect(config.about.length).toBeGreaterThan(0);
   });
 
-  it('has valid skills array', () => {
-    expect(Array.isArray(config.skills)).toBe(true);
-    expect(config.skills.length).toBeGreaterThan(0);
+  it('has valid skills configuration', () => {
+    expect(config.skills).toBeDefined();
+    expect(typeof config.skills.title).toBe('string');
+    expect(typeof config.skills.subtitle).toBe('string');
+    expect(Array.isArray(config.skills.categories)).toBe(true);
+    expect(config.skills.categories.length).toBeGreaterThan(0);
     
-    config.skills.forEach(skill => {
-      expect(typeof skill).toBe('string');
-      expect(skill.length).toBeGreaterThan(0);
+    config.skills.categories.forEach(category => {
+      expect(typeof category.name).toBe('string');
+      expect(typeof category.icon).toBe('string');
+      expect(Array.isArray(category.skills)).toBe(true);
+      
+      category.skills.forEach(skill => {
+        expect(typeof skill).toBe('string');
+        expect(skill.length).toBeGreaterThan(0);
+      });
     });
   });
 
@@ -59,7 +68,8 @@ describe('Configuration', () => {
     config.projects.forEach(project => {
       expect(typeof project.name).toBe('string');
       expect(typeof project.description).toBe('string');
-      expect(typeof project.link).toBe('string');
+      expect(typeof project.codeLink).toBe('string');
+      expect(typeof project.demoLink).toBe('string');
       expect(Array.isArray(project.technologies)).toBe(true);
       expect(typeof project.featured).toBe('boolean');
       
@@ -96,8 +106,8 @@ describe('Configuration', () => {
     expect(config.contact.linkedin.trim().length).toBeGreaterThan(0);
   });
 
-  it('has at least one skill', () => {
-    expect(config.skills.length).toBeGreaterThan(0);
+  it('has at least one skill category', () => {
+    expect(config.skills.categories.length).toBeGreaterThan(0);
   });
 
   it('has at least one experience item', () => {
@@ -143,13 +153,15 @@ describe('Configuration', () => {
 
   it('has valid URLs in projects', () => {
     config.projects.forEach(project => {
-      expect(project.link).toMatch(/^https?:\/\/.+/);
+      expect(project.codeLink).toMatch(/^https?:\/\/.+/);
+      expect(project.demoLink).toMatch(/^https?:\/\/.+/);
     });
   });
 
   it('has no duplicate skills', () => {
-    const uniqueSkills = [...new Set(config.skills)];
-    expect(uniqueSkills.length).toBe(config.skills.length);
+    const allSkills = config.skills.categories.flatMap(category => category.skills);
+    const uniqueSkills = [...new Set(allSkills)];
+    expect(uniqueSkills.length).toBe(allSkills.length);
   });
 
   it('has no duplicate project names', () => {
