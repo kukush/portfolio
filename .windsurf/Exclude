@@ -1,0 +1,38 @@
+# Windsurf Exclude File
+# Files and directories to exclude from Windsurf operations
+
+# Windsurf configuration and working files
+.windsurf/
+*.windsurf
+
+# Windsurf temporary files
+.windsurf-temp/
+.windsurf-cache/
+
+# Windsurf session files
+.windsurf-session/
+.windsurf-state/
+
+# Windsurf logs
+.windsurf.log
+windsurf.log*
+
+# Windsurf backup files
+*.windsurf.bak
+*.windsurf.tmp
+
+# Windsurf generated files
+.windsurf-generated/
+.windsurf-output/
+
+# IDE-specific windsurf files
+.vscode/windsurf/
+.idea/windsurf/
+
+# Windsurf AI assistant files
+.windsurf-ai/
+.windsurf-chat/
+
+# Windsurf build artifacts
+.windsurf-build/
+.windsurf-dist/
