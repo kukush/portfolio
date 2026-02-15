@@ -122,7 +122,7 @@ const config = {
   ],
 
   contact: {
-    email: import.meta.env.VITE_CONTACT_EMAIL || "kukushalemu@gmail.com",
+    email: import.meta.env.VITE_CONTACT_EMAIL || "nataltesfaye2017@gmail.com",
     github: import.meta.env.VITE_CONTACT_GITHUB || "https://github.com/kukush",
     linkedin: import.meta.env.VITE_CONTACT_LINKEDIN || "https://www.linkedin.com/in/getahun-tesfaye-alemu-bb715136/"
   }
