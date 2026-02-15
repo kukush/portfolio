@@ -17,12 +17,13 @@ This guide covers deploying your portfolio to GitHub Pages and Netlify.
 2. **Deploy to Netlify**
    - Go to [https://app.netlify.com/drop](https://app.netlify.com/drop)
    - Drag and drop your entire portfolio folder
-   - OR connect your GitHub repo for automatic deployments
+   - **OR** connect your GitHub repo for automatic deployments
 
 3. **Netlify Configuration** (Already configured)
    - Build command: `npm run build`
    - Publish directory: `dist`
    - Node version: 18
+   - MIME headers configured for JS/CSS files
 
 ### Option 2: GitHub Pages
 **Free hosting directly from your GitHub repo**
@@ -46,7 +47,19 @@ This guide covers deploying your portfolio to GitHub Pages and Netlify.
    npm run deploy
    ```
 
-## 📋 Deployment Checklist
+## � Netlify MIME Type Fix
+
+If you encounter "Expected a JavaScript-or-Wasm module script" error:
+
+1. **Updated netlify.toml** with proper MIME headers
+2. **Changed vite.config.js base path** to "/" for Netlify
+3. **Rebuild and redeploy**:
+   ```bash
+   npm run build
+   # Re-upload to Netlify or push to trigger auto-deploy
+   ```
+
+## �📋 Deployment Checklist
 
 ### Before Deploying:
 - [ ] Run `npm run build` to test build process
@@ -80,12 +93,38 @@ This guide covers deploying your portfolio to GitHub Pages and Netlify.
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Content-Type = "text/css"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
 ```
 
-### Build Process
-- Vite builds to `dist/` folder
-- All assets are optimized and minified
-- SPA routing handled by redirect rules
+### Vite Configuration (`vite.config.js`)
+```javascript
+export default defineConfig({
+  plugins: [react()],
+  base: "/", // Use "/" for Netlify, "/portfolio/" for GitHub Pages
+  build: {
+    assetsDir: "assets",
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
+});
+```
 
 ## 🌐 Custom Domain Setup
 
@@ -135,6 +174,11 @@ This guide covers deploying your portfolio to GitHub Pages and Netlify.
 - Clear build cache on platform
 - Check environment variables
 - Verify build configuration
+
+### MIME Type Errors (Netlify):
+- Ensure `netlify.toml` has proper headers
+- Check `vite.config.js` base path is "/"
+- Clear Netlify cache and redeploy
 
 ### Routing Issues:
 - SPA routing handled by redirects
