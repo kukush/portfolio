@@ -96,7 +96,6 @@ const config = {
       name: "E-Commerce Platform",
       description: "Full-stack e-commerce solution built with Next.js and Node.js. Features include user authentication, payment processing, and admin dashboard.",
       technologies: ["Next.js", "Node.js", "TypeScript", "PostgreSQL", "Docker"],
-      image: "/images/e-commerce.png",
       codeLink: "https://github.com/kukush/e-commerce-platform",
       demoLink: "https://e-commerce-demo.vercel.app",
       featured: true
@@ -105,7 +104,6 @@ const config = {
       name: "DevOps Automation Suite",
       description: "Comprehensive CI/CD pipeline automation using Jenkins, Docker, and Kubernetes. Reduced deployment time by 70% and improved system reliability.",
       technologies: ["Jenkins", "Docker", "Kubernetes", "Terraform", "AWS"],
-      image: "/images/devops-automation.png",
       codeLink: "https://github.com/kukush/devops-automation",
       demoLink: "https://devops-demo.vercel.app",
       featured: true
@@ -114,7 +112,6 @@ const config = {
       name: "Real-time Analytics Dashboard",
       description: "Interactive dashboard for real-time data visualization using React and Firebase. Handles thousands of concurrent users with live updates.",
       technologies: ["React", "Firebase", "Chart.js", "WebSocket", "TypeScript"],
-      image: "/images/analytics-dashboard.png",
       codeLink: "https://github.com/kukush/analytics-dashboard",
       demoLink: "https://analytics-demo.vercel.app",
       featured: true
