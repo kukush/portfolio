@@ -7,7 +7,7 @@ export default defineConfig({
   // Set `base` to "/<REPO_NAME>/" for GitHub Pages deployment.
   // For example, if your repo is "username/portfolio", use "/portfolio/".
   // For custom domains or Netlify root deployment, use "/".
-  base: "/",
+  base: "/portfolio/",
   build: {
     assetsDir: "assets",
     rollupOptions: {
