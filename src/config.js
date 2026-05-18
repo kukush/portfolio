@@ -4,14 +4,20 @@ const config = {
     title: import.meta.env.VITE_HERO_TITLE || "Senior Software Engineer || Software and Platform Architecture",
     location: import.meta.env.VITE_HERO_LOCATION || "Ethiopia , Addis Abeba",
     image: "/pic.jpeg",
-    bio: import.meta.env.VITE_HERO_BIO || "Software architect with 10+ years building scalable systems across Ethiopia and Europe. Passionate about solving real-world problems through technology and preparing to launch a startup focused on African innovation.",
+    bio: import.meta.env.VITE_HERO_BIO || "Software Architect with 10+ years of experience building scalable digital systems across Ethiopia and Europe. Focused on innovation, reliable technology, and creating impactful solutions for Africa.",
+    keywords: [
+      "Distributed Systems",
+      "Cloud Architecture",
+      "Backend Engineering",
+      "Startup Innovation"
+    ],
     status: {
       available: import.meta.env.VITE_HERO_STATUS_AVAILABLE === "true",
       text: import.meta.env.VITE_HERO_STATUS_TEXT || "Available"
     }
   },
 
-  about: import.meta.env.VITE_ABOUT_TEXT || "I'm a senior software engineer and architect with a Master's degree in Software Engineering and 10+ years of experience building digital products across Ethiopia and Europe. My international experience has shaped my approach to technology—combining practical problem-solving with robust architecture and long-term thinking.\n\nI specialize in designing scalable systems and transforming complex ideas into simple, reliable platforms. Currently focused on innovation and startup preparation, I aim to solve meaningful problems in Ethiopia and across Africa. I'm actively seeking collaborations with tech hubs and like-minded builders who believe technology can create real impact and opportunity.",
+  about: import.meta.env.VITE_ABOUT_TEXT || "With more than 10 years of experience in software engineering and architecture, I design scalable systems and digital products built for reliability, growth, and long-term impact.\n\nHaving worked across Ethiopia and Europe, I bring an international perspective to problem-solving—combining strong technical foundations with practical execution and modern system design.\n\nMy expertise includes distributed systems, cloud architecture, backend engineering, and scalable platform development. I'm currently focused on innovation, startup development, and building technology solutions that create real value across Africa.\n\nI'm also interested in collaborating with startups, tech hubs, and ambitious builders working on meaningful and impactful products.",
 
   skills: {
     title: import.meta.env.VITE_SKILLS_TITLE || "Technical Skills",
@@ -115,6 +121,21 @@ const config = {
       codeLink: "https://github.com/kukush/analytics-dashboard",
       demoLink: "https://analytics-demo.vercel.app",
       featured: true
+    }
+  ],
+
+  education: [
+    {
+      degree: "M.Sc., Computer Engineering",
+      field: "Software and Digital Systems",
+      institution: "Politecnico di Torino",
+      period: "Sep 2014 – Sep 2018",
+      thesis: {
+        title: "Analysis and Processing of Information Transmitted by Vessels",
+        link: "https://webthesis.biblio.polito.it/8456/1/tesi.pdf",
+        keyword: "AIS",
+        keywordLink: "https://www.google.com/search?q=Automatic+Identification+System"
+      }
     }
   ],
 

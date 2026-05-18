@@ -4,7 +4,7 @@ import profileImage from "./pic.jpeg";
 
 function App() {
   const [activeTab, setActiveTab] = useState("about");
-  const { hero, about, skills, experience, projects, contact } = config;
+  const { hero, about, skills, experience, projects, education, contact } = config;
 
   const tabs = [
     { id: "about", label: "About" },
@@ -66,6 +66,13 @@ function App() {
             <div className="title">{hero.title}</div>
             <div className="location">{hero.location}</div>
             <div className="bio">{hero.bio}</div>
+            <div className="hero-keywords">
+              {hero.keywords.map((keyword, index) => (
+                <span key={index} className="hero-keyword">
+                  {keyword}
+                </span>
+              ))}
+            </div>
             <div className="hero-links">
               <a href={contact.github} target="_blank" rel="noopener noreferrer" className="hero-link" aria-label="GitHub">
                 <svg className="icon" viewBox="0 0 24 24" fill="currentColor">
@@ -109,6 +116,32 @@ function App() {
       <section id="about" className="about">
         <h2 className="section-heading">About</h2>
         <p>{about}</p>
+        <div className="about-education">
+          <h3 className="about-education-heading">Education</h3>
+          {education.map((edu, index) => (
+            <div key={index} className="education-item">
+              <div className="education-main">
+                <span className="education-degree">{edu.degree}</span>
+                <span className="education-separator">·</span>
+                <span className="education-field">{edu.field}</span>
+              </div>
+              <div className="education-meta">
+                <span className="education-institution">{edu.institution}</span>
+                <span className="education-period">{edu.period}</span>
+              </div>
+              <p className="education-thesis">
+                Thesis:{" "}
+                <a href={edu.thesis.link} target="_blank" rel="noopener noreferrer" className="education-thesis-link">
+                  {edu.thesis.title}
+                </a>
+                {" — "}
+                <a href={edu.thesis.keywordLink} target="_blank" rel="noopener noreferrer" className="education-keyword">
+                  {edu.thesis.keyword}
+                </a>
+              </p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section id="skills" className="skills">
