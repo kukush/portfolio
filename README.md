@@ -151,7 +151,7 @@ Your site will be available at `https://<username>.github.io/portfolio/`.
 | `VITE_HERO_STATUS_AVAILABLE` | Availability status | "true" |
 | `VITE_HERO_STATUS_TEXT` | Status text | "Available" |
 | `VITE_ABOUT_TEXT` | About section content | "I'm a senior software engineer..." |
-| `VITE_CONTACT_EMAIL` | Contact email | "kukushalemu@gmail.com" |
+| `VITE_CONTACT_EMAIL` | Contact email | "getahuneandh@gmail.com" |
 | `VITE_CONTACT_GITHUB` | GitHub profile URL | "https://github.com/kukush" |
 | `VITE_CONTACT_LINKEDIN` | LinkedIn profile URL | "https://linkedin.com/in/..." |
 | `VITE_SKILLS_TITLE` | Skills section title | "Technical Skills" |
