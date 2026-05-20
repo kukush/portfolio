@@ -36,7 +36,7 @@ body {
 }
 
 section {
-  padding: 64px 0;
+  padding: 4px 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -46,7 +46,7 @@ section:last-of-type {
 
 /* Hero */
 .hero {
-  padding: 96px 0 64px;
+  padding: 40px 0 4px;
 }
 
 .hero-content {
@@ -233,6 +233,82 @@ section:last-of-type {
   letter-spacing: -0.01em;
 }
 
+/* Toggle Tabs (About/Education side-by-side) - matches tab navigation style */
+.toggle-header-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.toggle-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  margin-bottom: -1px;
+}
+
+.toggle-tab:hover {
+  color: var(--text-primary);
+}
+
+.toggle-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.toggle-heading {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.toggle-tab.active .toggle-icon {
+  opacity: 1;
+}
+
+.toggle-icon.expanded {
+  transform: rotate(180deg);
+}
+
+/* Content area with smooth crossfade transition */
+.about-content-wrapper {
+  position: relative;
+}
+
+.toggle-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.toggle-content.expanded {
+  max-height: 2000px;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
 /* About */
 .about p {
   color: var(--text-secondary);
@@ -240,22 +316,32 @@ section:last-of-type {
   max-width: 720px;
 }
 
-/* Education (inside About) */
-.about-education {
-  margin-top: 40px;
-  padding-top: 28px;
-  border-top: 1px solid var(--border);
+/* Remove extra section padding and border when content collapsed */
+section.about {
+  padding: none;
+  border-bottom: none;
 }
 
-.about-education-heading {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  margin-bottom: 16px;
+/* Minimize space above Technical Skills */
+section.skills {
+  padding-top: 16px;
 }
 
+/* Section divider that appears when About/Education expanded */
+.section-divider-fade {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+
+.section-divider-fade.visible {
+  max-height: 64px;
+  opacity: 1;
+  margin-top: 32px;
+}
+
+/* Education items */
 .education-item {
   display: flex;
   flex-direction: column;
@@ -522,6 +608,42 @@ section:last-of-type {
 .experience-tech-badge:hover {
   background-color: var(--bg-secondary);
   color: var(--text-primary);
+}
+
+/* Show More/Less Button */
+.show-more-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 32px;
+  padding: 12px 24px;
+  background-color: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.show-more-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: rgba(97, 218, 251, 0.05);
+}
+
+.show-more-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.show-more-icon.expanded {
+  transform: rotate(180deg);
 }
 
 .section-description {

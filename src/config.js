@@ -21,78 +21,140 @@ const config = {
 
   skills: {
     title: import.meta.env.VITE_SKILLS_TITLE || "Technical Skills",
-    subtitle: import.meta.env.VITE_SKILLS_SUBTITLE || "Comprehensive expertise across modern development stack with focus on scalable web applications and DevOps practices.",
+    subtitle: import.meta.env.VITE_SKILLS_SUBTITLE || " Comprehensive expertise in distributed systems, cloud-native architecture, backend engineering, IIoT platforms, CI/CD automation, and microservices. Proven track record of architecting reliable, scalable, and business-driven software solutions.",
     categories: [
       {
         name: "Programming Languages",
         icon: "< />",
-        skills: ["JavaScript", "TypeScript", "SQL", "PHP", "HCL"]
+        skills: ["Java", "TypeScript", "Kotlin", "C#", "Node","Shell", "Python","Ruby"]
       },
       {
-        name: "DevOps & Tools",
+        name: "DevOps & Cloud Tools",
         icon: "⚙",
-        skills: ["Docker", "Git", "VIM", "NeoVim", "Kubernetes", "Agile", "CI/CD with Jenkins", "Terraform"]
+        skills: ["Docker", "Git", "VIM", "AWS", "Kubernetes", "Agile", "CI/CD with Jenkins", "Terraform"]
       },
       {
-        name: "JavaScript Libraries & Frameworks",
+        name: "Libraries & Frameworks",
         icon: "🌐",
-        skills: ["Node.js", "React.js", "Bun.js", "Deno", "Vanilla JS", "Next.js"]
+        skills: ["Node.js", "React.js", "Vanilla JS", "Next.js","Hibernate","Spring", "Apache","Ruby on Rails"]
       },
       {
-        name: "Web Frameworks",
+        name: "Databases & Storage:",
         icon: "🗄",
-        skills: ["Express.js", "Fastify"]
+        skills: ["Postgres", "Mongo","Redis", "SQL","Dynamo"]
       },
       {
-        name: "Backend as a Service",
+        name: "Backend as a Service || Engineering ",
         icon: "☁",
-        skills: ["Firebase", "Appwrite"]
+        skills: ["Firebase", "Supabase", "REST", "Microservices","DDD || EDA","Serverless","AI-Native"]
       },
       {
         name: "Testing",
         icon: "⚠",
-        skills: ["Jest"]
+        skills: ["Jest","JUnit","Playwright", "Cypress","Postman","Appium"]
       }
     ]
   },
 
   experience: [
     {
-      role: "Senior Software Engineer",
-      company: "Acme Corp",
-      period: "2022 – Present",
-      location: "San Francisco, CA",
-      type: "Full-time",
+      role: "Founder & Product Engineer",
+      company: "StartUp stage",
+      period: "since April 2026",
+      location: "Addis Ababa, Ethiopia", 
+      type:  "Full-time",
+      technologies: ["AI","Innovation", "Startup"],
+      highlights: [
+             "Privacy-focused, offline-first financial and telecom asset management application designed for the Ethiopian market. It helps users track their mobile balances, data packages, and financial transactions by automatically parsing SMS messages from telecom providers and banks.",
+             "AI-powered real-time urban theft detection and response platform with extensible hardware abstraction."
+
+      ]
+    },
+    {
+      role: "Senior Software Engineer Full Stack.",
+      company: "Upwork",
+      period: "Nov2025 – Jan2026",
+      location: "Remote",
+      type: "Freelance",
       technologies: ["React", "Node.js", "TypeScript", "Docker", "AWS", "MongoDB"],
       highlights: [
         "Led migration of monolithic API to microservices, reducing deploy times by 70%.",
-        "Designed and implemented real-time notification system serving 50k+ users.",
+        "Software and Platform Architectire.",
+        "User Experiance(UX).",
         "Mentored a team of 4 junior engineers through code reviews and pair programming."
       ]
     },
     {
-      role: "Software Engineer",
-      company: "StartupXYZ",
-      period: "2019 – 2022", 
-      location: "New York, NY",
+      role: "Software Engineer| Architect",
+      company: "Endress+Hauser Group",
+      period: "2018 – 2025", 
+      location: "Freiburg, Germany",
       type: "Full-time",
-      technologies: ["React", "JavaScript", "Python", "PostgreSQL", "Redis", "Jest"],
+      technologies: ["Ruby on Rails","Java", "JavaScript-React", "Type", "PostgreSQL", "Node", "Jest","AWS","Docker"],
       highlights: [
-        "Built customer-facing dashboard with React, reducing support tickets by 40%.",
-        "Implemented automated testing pipeline achieving 90% code coverage.",
+        "Delivered successful industrial IoT projects with real-time data processing and device integration.",
+        "modernized legacy systems into microservices and cloud-based architectures to enhance performance",
+        "Defined and enforced architecture standards and coding guidelines across teams.",
+        "Conducted architecture and code reviews while mentoring junior engineers to ensure reliability",
+        "Implemented automated testing pipeline achieving 96% code coverage.",
         "Optimized database queries, improving API response times by 3x."
       ]
     },
     {
-      role: "Junior Developer",
-      company: "WebAgency",
-      period: "2017 – 2019",
-      location: "Austin, TX", 
-      type: "Full-time",
-      technologies: ["HTML", "CSS", "JavaScript", "jQuery", "PHP", "MySQL"],
+      role: "Software Engineer intern",
+      company: "Market Logic Software",
+      period: "Aug. 2017 – Jan. 2018",
+      location: "Berlin, Germany", 
+      type: "Full-time/Internship",
+      technologies: ["Gulp","React", "Redux",  "Node.js", "WebPack", "JavaScript", "MySQL"],
       highlights: [
-        "Developed responsive web applications for 10+ client projects.",
-        "Introduced component-based architecture to the team's workflow."
+        "Developed multi-level Java web applications for enterprise use, enhancing functionality.",
+        "Integrated third-party services to expand software product capabilities.",
+        "Conducted rigorous testing to ensure minimal bugs upon deployment.",
+      ]
+    },
+    {
+      role: "Full Stack Developer",
+      company: "Goo.com Srl ",
+      period: "June 2017 – Jan. 2019",
+      location: "Milan, Italy", 
+      type: "Full-time",
+      technologies: ["Java/J2EE,","Java Spring", "jQuery", "Bootstrap", "JavaScript"],
+      highlights: [
+        "Full-stack role, backend, API and frontend.",
+        "Design and develop a multi-level java web application.",
+
+      ]
+    },
+    {
+      role: "System Engineer",
+      company: "Information Network Security Agency (INSA)",
+      period: "Sep. 2010 – Aug. 2013",
+      location: "Addis Ababa, Ethiopia",
+      type: "Full-time",
+      technologies: ["C", "C#", , "HTML"],
+      highlights: [
+        "Designed algorithms and developed software for embedded applications and Human/Machine Interfaces.",
+        "Integrated third-party services to expand software product capabilities.",
+        "Developed software applications using advanced object- oriented programming techniques",
+        "Produced technical design documentation and detailed program specifications",
+        "Maintained industry knowledge through continuous learning, applying relevant trends effectively",
+        "GCS development"
+      ]
+    },
+    {
+      role: "Software developer",
+      company: "Cyber Soft plc",
+      period: "June 2008 – July 2010",
+      location: "Addis Ababa, Ethiopia",
+      type: "Full-time",
+      technologies: ["C#", "HTML", "CSS", "SQL"],
+      highlights: [
+        "Software analysis,design,development,and testing across multiple projects.",
+        "Technical design document sand programme specifications for systems and databases.",
+        "Requirement analysis documentation to support system design initiatives.",
+        "Software programming within integrated supply chain solutions.",
+        "Identified and rectified programming errors through comprehensive testing."
       ]
     }
   ],
@@ -126,10 +188,9 @@ const config = {
 
   education: [
     {
-      degree: "M.Sc., Computer Engineering",
-      field: "Software and Digital Systems",
-      institution: "Politecnico di Torino",
-      period: "Sep 2014 – Sep 2018",
+      degree: "Computer Engineering(MSC)",
+      field: "Software and Digital Systems ",
+      institution: "Politecnico di Torino-Italy -2018",
       thesis: {
         title: "Analysis and Processing of Information Transmitted by Vessels",
         link: "https://webthesis.biblio.polito.it/8456/1/tesi.pdf",

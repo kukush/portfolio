@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import config from "./config";
-import profileImage from "./pic.jpeg";
+import profileImage from "./assets/profile_pic.jpeg";
 
 function App() {
   const [activeTab, setActiveTab] = useState("about");
+  const [aboutExpanded, setAboutExpanded] = useState(false);
+  const [educationExpanded, setEducationExpanded] = useState(false);
+  const [showAllExperience, setShowAllExperience] = useState(false);
   const { hero, about, skills, experience, projects, education, contact } = config;
 
   const tabs = [
@@ -52,6 +55,10 @@ function App() {
             onClick={() => {
               setActiveTab(tab.id);
               scrollToSection(tab.id);
+              if (tab.id === "about") {
+                setAboutExpanded(true);
+                setEducationExpanded(false);
+              }
             }}
           >
             {tab.label}
@@ -114,33 +121,78 @@ function App() {
       </section>
 
       <section id="about" className="about">
-        <h2 className="section-heading">About</h2>
-        <p>{about}</p>
-        <div className="about-education">
-          <h3 className="about-education-heading">Education</h3>
-          {education.map((edu, index) => (
-            <div key={index} className="education-item">
-              <div className="education-main">
-                <span className="education-degree">{edu.degree}</span>
-                <span className="education-separator">·</span>
-                <span className="education-field">{edu.field}</span>
+        <div className="toggle-header-row">
+          <button 
+            className={`toggle-tab ${aboutExpanded ? 'active' : ''}`}
+            onClick={() => {
+              if (aboutExpanded) {
+                setAboutExpanded(false);
+              } else {
+                setAboutExpanded(true);
+                setEducationExpanded(false);
+              }
+            }}
+            aria-expanded={aboutExpanded}
+          >
+            <h2 className="toggle-heading">About</h2>
+            <span className={`toggle-icon ${aboutExpanded ? 'expanded' : ''}`}>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                <path d="M6 8L1 3h10L6 8z"/>
+              </svg>
+            </span>
+          </button>
+          <button 
+            className={`toggle-tab ${educationExpanded ? 'active' : ''}`}
+            onClick={() => {
+              if (educationExpanded) {
+                setEducationExpanded(false);
+              } else {
+                setAboutExpanded(false);
+                setEducationExpanded(true);
+              }
+            }}
+            aria-expanded={educationExpanded}
+          >
+            <h2 className="toggle-heading">Education</h2>
+            <span className={`toggle-icon ${educationExpanded ? 'expanded' : ''}`}>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                <path d="M6 8L1 3h10L6 8z"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div className="about-content-wrapper">
+          <div className={`toggle-content ${aboutExpanded ? 'expanded' : ''}`}>
+            <p>{about}</p>
+          </div>
+          <div className={`toggle-content ${educationExpanded ? 'expanded' : ''}`}>
+            {education.map((edu, index) => (
+              <div key={index} className="education-item">
+                <div className="education-main">
+                  <span className="education-degree">{edu.degree}</span>
+                  <span className="education-separator">·</span>
+                  <span className="education-field">{edu.field}</span>
+                </div>
+                <div className="education-meta">
+                  <span className="education-institution">{edu.institution}</span>
+                  <span className="education-period">{edu.period}</span>
+                </div>
+                <p className="education-thesis">
+                  Thesis:{" "}
+                  <a href={edu.thesis.link} target="_blank" rel="noopener noreferrer" className="education-thesis-link">
+                    {edu.thesis.title}
+                  </a>
+                  {" — "}
+                  <a href={edu.thesis.keywordLink} target="_blank" rel="noopener noreferrer" className="education-keyword">
+                    {edu.thesis.keyword}
+                  </a>
+                </p>
               </div>
-              <div className="education-meta">
-                <span className="education-institution">{edu.institution}</span>
-                <span className="education-period">{edu.period}</span>
-              </div>
-              <p className="education-thesis">
-                Thesis:{" "}
-                <a href={edu.thesis.link} target="_blank" rel="noopener noreferrer" className="education-thesis-link">
-                  {edu.thesis.title}
-                </a>
-                {" — "}
-                <a href={edu.thesis.keywordLink} target="_blank" rel="noopener noreferrer" className="education-keyword">
-                  {edu.thesis.keyword}
-                </a>
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+        <div className={`section-divider-fade ${aboutExpanded || educationExpanded ? 'visible' : ''}`}>
+          <div className="divider-line"></div>
         </div>
       </section>
 
@@ -168,7 +220,7 @@ function App() {
 
       <section id="experience" className="experience">
         <h2 className="section-heading">Professional Experience</h2>
-        {experience.map((job, index) => (
+        {experience.slice(0, showAllExperience ? experience.length : 3).map((job, index) => (
           <div key={index} className="experience-item" data-testid="experience-item">
             <div className="experience-header">
               <div className="experience-header-left">
@@ -195,6 +247,19 @@ function App() {
             </div>
           </div>
         ))}
+        {experience.length > 3 && (
+          <button
+            className="show-more-button"
+            onClick={() => setShowAllExperience(!showAllExperience)}
+          >
+            {showAllExperience ? "Show Less" : "Show More"}
+            <span className={`show-more-icon ${showAllExperience ? 'expanded' : ''}`}>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                <path d="M6 8L1 3h10L6 8z"/>
+              </svg>
+            </span>
+          </button>
+        )}
       </section>
 
       <section id="projects" className="projects">
