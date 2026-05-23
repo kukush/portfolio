@@ -6,10 +6,11 @@ const config = {
     image: "/pic.jpeg",
     bio: import.meta.env.VITE_HERO_BIO || "Software Architect with 10+ years of experience building scalable digital systems across Ethiopia and Europe. Focused on innovation, reliable technology, and creating impactful solutions for Africa.",
     keywords: [
-      "Distributed Systems",
       "Cloud Architecture",
-      "Backend Engineering",
-      "Startup Innovation"
+      "Product Engineering",
+      "Startup Innovation",
+      "AI || MCP",
+      "IIOT"
     ],
     status: {
       available: import.meta.env.VITE_HERO_STATUS_AVAILABLE === "true",
@@ -132,7 +133,7 @@ const config = {
       period: "Sep. 2010 – Aug. 2013",
       location: "Addis Ababa, Ethiopia",
       type: "Full-time",
-      technologies: ["C", "C#", , "HTML"],
+      technologies: ["C", "C#", "HTML"],
       highlights: [
         "Designed algorithms and developed software for embedded applications and Human/Machine Interfaces.",
         "Integrated third-party services to expand software product capabilities.",

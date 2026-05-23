@@ -2,31 +2,32 @@ import { useState, useEffect } from "react";
 import config from "./config";
 import profileImage from "./assets/profile_pic.jpeg";
 
+const TABS = [
+  { id: "about", label: "About" },
+  { id: "skills", label: "Skills" },
+  { id: "experience", label: "Experience" },
+  { id: "projects", label: "Projects" },
+  { id: "contact", label: "Contact" }
+];
+
 function App() {
   const [activeTab, setActiveTab] = useState("about");
   const [aboutExpanded, setAboutExpanded] = useState(false);
   const [educationExpanded, setEducationExpanded] = useState(false);
   const [showAllExperience, setShowAllExperience] = useState(false);
   const { hero, about, skills, experience, projects, education, contact } = config;
-
-  const tabs = [
-    { id: "about", label: "About" },
-    { id: "skills", label: "Skills" },
-    { id: "experience", label: "Experience" },
-    { id: "projects", label: "Projects" },
-    { id: "contact", label: "Contact" }
-  ];
+  const visibleExperience = showAllExperience ? experience : experience.slice(0, 3);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = tabs.map(tab => tab.id);
+      const sections = TABS.map((tab) => tab.id);
       const scrollPosition = window.scrollY + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -41,17 +42,19 @@ function App() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <div className="container">
-      <nav className="tab-navigation">
-        {tabs.map((tab) => (
+      <nav className="tab-navigation" aria-label="Primary navigation">
+        {TABS.map((tab) => (
           <button
+            type="button"
             key={tab.id}
             className={`tab-button ${activeTab === tab.id ? "active" : ""}`}
+            aria-current={activeTab === tab.id ? "page" : undefined}
             onClick={() => {
               setActiveTab(tab.id);
               scrollToSection(tab.id);
@@ -74,8 +77,8 @@ function App() {
             <div className="location">{hero.location}</div>
             <div className="bio">{hero.bio}</div>
             <div className="hero-keywords">
-              {hero.keywords.map((keyword, index) => (
-                <span key={index} className="hero-keyword">
+              {hero.keywords.map((keyword) => (
+                <span key={keyword} className="hero-keyword">
                   {keyword}
                 </span>
               ))}
@@ -116,13 +119,14 @@ function App() {
           <blockquote className="hero-quote-text">
             {import.meta.env.VITE_HERO_QUOTE || "Innovation should serve humanity,\n design with empathy for the people you're trying to design for."}
           </blockquote>
-      
         </div>
       </section>
 
       <section id="about" className="about">
+        <h2 className="section-heading about-section-heading">About & Education</h2>
         <div className="toggle-header-row">
           <button 
+            type="button"
             className={`toggle-tab ${aboutExpanded ? 'active' : ''}`}
             onClick={() => {
               if (aboutExpanded) {
@@ -134,7 +138,7 @@ function App() {
             }}
             aria-expanded={aboutExpanded}
           >
-            <h2 className="toggle-heading">About</h2>
+            <span className="toggle-heading">About</span>
             <span className={`toggle-icon ${aboutExpanded ? 'expanded' : ''}`}>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
                 <path d="M6 8L1 3h10L6 8z"/>
@@ -142,6 +146,7 @@ function App() {
             </span>
           </button>
           <button 
+            type="button"
             className={`toggle-tab ${educationExpanded ? 'active' : ''}`}
             onClick={() => {
               if (educationExpanded) {
@@ -153,7 +158,7 @@ function App() {
             }}
             aria-expanded={educationExpanded}
           >
-            <h2 className="toggle-heading">Education</h2>
+            <span className="toggle-heading">Education</span>
             <span className={`toggle-icon ${educationExpanded ? 'expanded' : ''}`}>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
                 <path d="M6 8L1 3h10L6 8z"/>
@@ -166,8 +171,8 @@ function App() {
             <p>{about}</p>
           </div>
           <div className={`toggle-content ${educationExpanded ? 'expanded' : ''}`}>
-            {education.map((edu, index) => (
-              <div key={index} className="education-item">
+            {education.map((edu) => (
+              <div key={`${edu.degree}-${edu.institution}`} className="education-item">
                 <div className="education-main">
                   <span className="education-degree">{edu.degree}</span>
                   <span className="education-separator">·</span>
@@ -200,15 +205,15 @@ function App() {
         <h2 className="section-heading">{skills.title}</h2>
         <p className="skills-subtitle">{skills.subtitle}</p>
         <div className="skills-grid">
-          {skills.categories.map((category, index) => (
-            <div key={index} className="skill-category" data-testid="skill-category">
+          {skills.categories.map((category) => (
+            <div key={category.name} className="skill-category" data-testid="skill-category">
               <div className="category-header">
                 <span className="category-icon">{category.icon}</span>
                 <h3 className="category-name">{category.name}</h3>
               </div>
               <div className="category-skills">
-                {category.skills.map((skill, skillIndex) => (
-                  <span key={skillIndex} className="skill-item" data-testid="skill-badge">
+                {category.skills.map((skill) => (
+                  <span key={skill} className="skill-item" data-testid="skill-badge">
                     {skill}
                   </span>
                 ))}
@@ -220,8 +225,8 @@ function App() {
 
       <section id="experience" className="experience">
         <h2 className="section-heading">Professional Experience</h2>
-        {experience.slice(0, showAllExperience ? experience.length : 3).map((job, index) => (
-          <div key={index} className="experience-item" data-testid="experience-item">
+        {visibleExperience.map((job) => (
+          <div key={`${job.company}-${job.role}`} className="experience-item" data-testid="experience-item">
             <div className="experience-header">
               <div className="experience-header-left">
                 <div className="role">{job.role}</div>
@@ -234,13 +239,13 @@ function App() {
               </div>
             </div>
             <ul className="experience-description">
-              {job.highlights.map((highlight, descIndex) => (
-                <li key={descIndex}>{highlight}</li>
+              {job.highlights.map((highlight) => (
+                <li key={highlight}>{highlight}</li>
               ))}
             </ul>
             <div className="experience-technologies">
-              {job.technologies.map((tech, techIndex) => (
-                <span key={techIndex} className="experience-tech-badge">
+              {job.technologies.map((tech) => (
+                <span key={tech} className="experience-tech-badge">
                   {tech}
                 </span>
               ))}
@@ -249,6 +254,7 @@ function App() {
         ))}
         {experience.length > 3 && (
           <button
+            type="button"
             className="show-more-button"
             onClick={() => setShowAllExperience(!showAllExperience)}
           >
@@ -268,16 +274,16 @@ function App() {
           A selection of projects that demonstrate my expertise in full-stack development and modern DevOps practices.
         </p>
         <div className="projects-grid">
-          {projects.map((project, index) => (
-            <div key={index} className={`project-card ${project.featured ? 'featured' : ''}`} data-testid="project-item">
+          {projects.map((project) => (
+            <div key={project.name} className={`project-card ${project.featured ? 'featured' : ''}`} data-testid="project-item">
               <div className="project-image-placeholder">
                 {project.name}
               </div>
               <h3 className="project-title">{project.name}</h3>
               <p className="project-description">{project.description}</p>
               <div className="project-technologies">
-                {project.technologies.map((tech, techIndex) => (
-                  <span key={techIndex} className="project-tech-badge" data-testid="tech-badge">
+                {project.technologies.map((tech) => (
+                  <span key={tech} className="project-tech-badge" data-testid="tech-badge">
                     {tech}
                   </span>
                 ))}

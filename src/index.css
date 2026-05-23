@@ -161,6 +161,7 @@ section:last-of-type {
 
 .hero-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   margin-top: 20px;
 }
@@ -826,6 +827,7 @@ footer {
 
 .footer-right {
   display: flex;
+  flex-wrap: wrap;
   gap: 24px;
 }
 
@@ -868,13 +870,13 @@ footer {
   }
 
   .hero-links {
-    flex-direction: column;
-    gap: 8px;
-    align-items: flex-start;
+    justify-content: center;
+    gap: 12px;
   }
 
   .hero-link {
-    display: inline-block;
+    width: 40px;
+    height: 40px;
   }
 
   .contact-button {
@@ -889,6 +891,7 @@ footer {
   }
 
   .footer-right {
+    justify-content: center;
     gap: 16px;
   }
 

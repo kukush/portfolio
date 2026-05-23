@@ -1,10 +1,10 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import App from './App';
 import config from './config';
 
 // Mock the profile image import
-vi.mock('./pic.jpeg', () => ({ default: 'mock-profile-image' }));
+vi.mock('./assets/profile_pic.jpeg', () => ({ default: 'mock-profile-image' }));
 
 // Mock IntersectionObserver
 const mockIntersectionObserver = vi.fn();
@@ -86,7 +86,7 @@ describe('App Component', () => {
   it('renders all section headings', () => {
     render(<App />);
     
-    expect(screen.getByText('About', { selector: '.section-heading' })).toBeInTheDocument();
+    expect(screen.getByText('About & Education', { selector: '.section-heading' })).toBeInTheDocument();
     expect(screen.getByText('Technical Skills', { selector: '.section-heading' })).toBeInTheDocument();
     expect(screen.getByText('Professional Experience', { selector: '.section-heading' })).toBeInTheDocument();
     expect(screen.getByText('Featured Projects', { selector: '.section-heading' })).toBeInTheDocument();
@@ -116,7 +116,7 @@ describe('App Component', () => {
   it('displays experience items with correct details', () => {
     render(<App />);
     
-    config.experience.forEach((job, index) => {
+    config.experience.slice(0, 3).forEach((job, index) => {
       const experienceItem = screen.getAllByTestId('experience-item')[index];
       
       expect(experienceItem).toHaveTextContent(job.role);
@@ -125,6 +125,22 @@ describe('App Component', () => {
       expect(experienceItem).toHaveTextContent(job.location);
       expect(experienceItem).toHaveTextContent(job.type);
       
+      job.highlights.forEach(highlight => {
+        expect(experienceItem).toHaveTextContent(highlight);
+      });
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: /show more/i }));
+
+    config.experience.slice(3).forEach((job, index) => {
+      const experienceItem = screen.getAllByTestId('experience-item')[index + 3];
+
+      expect(experienceItem).toHaveTextContent(job.role);
+      expect(experienceItem).toHaveTextContent(job.company);
+      expect(experienceItem).toHaveTextContent(job.period);
+      expect(experienceItem).toHaveTextContent(job.location);
+      expect(experienceItem).toHaveTextContent(job.type);
+
       job.highlights.forEach(highlight => {
         expect(experienceItem).toHaveTextContent(highlight);
       });
@@ -184,21 +200,23 @@ describe('App Component', () => {
   it('highlights active tab correctly', () => {
     render(<App />);
     
-    const aboutTab = screen.getByRole('button', { name: 'About' });
+    const navigation = screen.getByRole('navigation', { name: /primary navigation/i });
+    const aboutTab = within(navigation).getByRole('button', { name: 'About' });
     expect(aboutTab).toHaveClass('active');
   });
 
   it('switches active tab when clicked', async () => {
     render(<App />);
     
-    const skillsTab = screen.getByRole('button', { name: 'Skills' });
+    const navigation = screen.getByRole('navigation', { name: /primary navigation/i });
+    const skillsTab = within(navigation).getByRole('button', { name: 'Skills' });
     fireEvent.click(skillsTab);
     
     await waitFor(() => {
       expect(skillsTab).toHaveClass('active');
     });
     
-    const aboutTab = screen.getByRole('button', { name: 'About' });
+    const aboutTab = within(navigation).getByRole('button', { name: 'About' });
     expect(aboutTab).not.toHaveClass('active');
   });
 
@@ -208,7 +226,8 @@ describe('App Component', () => {
     
     render(<App />);
     
-    const skillsTab = screen.getByRole('button', { name: 'Skills' });
+    const navigation = screen.getByRole('navigation', { name: /primary navigation/i });
+    const skillsTab = within(navigation).getByRole('button', { name: 'Skills' });
     fireEvent.click(skillsTab);
     
     expect(scrollToMock).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
@@ -224,7 +243,7 @@ describe('App Component', () => {
     fireEvent.scroll(window);
     
     // Just verify the scroll handler doesn't crash
-    expect(screen.getByRole('navigation')).toBeInTheDocument();
+    expect(screen.getByRole('navigation', { name: /primary navigation/i })).toBeInTheDocument();
   });
 
   it('applies featured class to featured projects', () => {
@@ -271,8 +290,8 @@ describe('App Component', () => {
     render(<App />);
     
     // Should still render basic structure
-    expect(screen.getByRole('navigation')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'About' })).toBeInTheDocument();
+    expect(screen.getByRole('navigation', { name: /primary navigation/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'About & Education' })).toBeInTheDocument();
   });
 
   it('updates active tab on scroll to different sections', () => {
@@ -316,8 +335,11 @@ describe('App Component', () => {
   it('displays correct number of experience items', () => {
     render(<App />);
     
-    const experienceItems = screen.getAllByTestId('experience-item');
-    expect(experienceItems).toHaveLength(config.experience.length);
+    expect(screen.getAllByTestId('experience-item')).toHaveLength(3);
+
+    fireEvent.click(screen.getByRole('button', { name: /show more/i }));
+
+    expect(screen.getAllByTestId('experience-item')).toHaveLength(config.experience.length);
   });
 
   it('displays correct number of project items', () => {

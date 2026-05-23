@@ -53,6 +53,12 @@ describe('Configuration', () => {
       expect(typeof job.location).toBe('string');
       expect(typeof job.type).toBe('string');
       expect(Array.isArray(job.highlights)).toBe(true);
+      expect(Array.isArray(job.technologies)).toBe(true);
+
+      job.technologies.forEach(technology => {
+        expect(typeof technology).toBe('string');
+        expect(technology.length).toBeGreaterThan(0);
+      });
       
       job.highlights.forEach(highlight => {
         expect(typeof highlight).toBe('string');
